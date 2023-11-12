@@ -15,8 +15,8 @@
         }
 
         .jumbotron {
-            background-color: #3498db;
-            color: #fff;
+            background-color: #f8f8f8;
+            color: #000;
             text-align: center;
             padding: 20px;
         }
@@ -43,6 +43,24 @@
         .exif-section h4 {
             color: #3498db;
         }
+
+        .btn-primary {
+            background-color: #000;
+            color: #fff;
+            border-color: #000;
+
+            padding: 10px 20px;
+            font-size: 12px;
+            border-radius: 5px;
+            text-transform: uppercase;
+        }
+        
+        .btn-primary:hover {
+            background-color: #27ae60;
+            border-color: #219d58;
+            color: #fff;
+        }
+
     </style>
 </head>
 <body>
@@ -61,8 +79,15 @@
 
                 // Check if an image file is uploaded
                 if (!empty($imageFile['tmp_name'])) {
-                    $fileType = exif_imagetype($imageFile['tmp_name']);
-                    $imageData = file_get_contents($imageFile['tmp_name']);
+                    // Verify file type using getimagesize
+                    $imageInfo = getimagesize($imageFile['tmp_name']);
+                    if ($imageInfo === false) {
+                        echo '<p class="text-danger">Invalid image file.</p>';
+                        $fileType = false;
+                    } else {
+                        $fileType = $imageInfo[2];
+                        $imageData = file_get_contents($imageFile['tmp_name']);
+                    }
                 } elseif (!empty($imageUrl)) {
                     // Check if the image source is a valid URL
                     if (!filter_var($imageUrl, FILTER_VALIDATE_URL)) {
