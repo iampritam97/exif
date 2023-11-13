@@ -66,7 +66,7 @@
 
 <div class="jumbotron">
 <h1>Exif Data Viewer</h1>
-<h2>Explore and Analyze Image Metadata</h2>
+<h3>Explore and Analyze Image Metadata</h3>
 </div>
 
 <div class="container">
@@ -105,15 +105,114 @@
 
                 if ($fileType !== false) {
                     $exifData = exif_read_data("data://image/jpeg;base64," . base64_encode($imageData));
-
+                
                     if ($exifData !== false) {
+                        // Array of keys you want to display
+                        $CameraToDisplay = array(
+                            'Make',
+                            'Model',
+                            'FirmwareVersion',
+                            'FocalLength',
+                            'ApertureFNumber',
+                            'ExposureTime',
+                            'ISO',
+                            // Add more keys as needed
+                        );
+
+                        $ImageToDisplay = array(
+                            'OwnerName',
+                            'ImageDescription',
+                            'MimeType',
+                            'FileSize',
+                            'ExifImageWidth',
+                            'ExifImageLength',
+                            'DateTimeOriginal',
+                            //'GPSLongitude',
+                            //'GPSLatitude',
+                            // Add more keys as needed
+                        );
+
+                        $OtherToDisplay = array(
+                            'Software',
+                            'FocalLength',
+                            'UserComment',
+                            'ExposureTime',
+                            'XResolution',
+                            'YResolution',
+                            'ISO',
+                            // Add more keys as needed
+                        );
+                
                         echo '<div class="exif-data">';
-                        foreach ($exifData as $key => $value) {
-                            echo '<div class="exif-section">';
-                            echo '<h4>' . htmlspecialchars($key) . '</h4>';
-                            echo '<pre>' . htmlspecialchars(print_r($value, true)) . '</pre>';
-                            echo '</div>';
+                        echo '<center><h4>Camera Settings</h4></center>';
+                        echo '<table class="table table-bordered">';
+                        echo '<thead><tr><th>Property</th><th>Value</th></tr></thead>';
+                        echo '<tbody>';
+                        foreach ($CameraToDisplay as $key) {
+                            if (array_key_exists($key, $exifData)) {
+                                echo '<tr>';
+                                echo '<td>' . htmlspecialchars($key) . '</td>';
+                                // Check if the value is an array before using htmlspecialchars
+                                $value = $exifData[$key];
+                                if (is_array($value)) {
+                                    echo '<td><pre>' . htmlspecialchars(print_r($value, true)) . '</pre></td>';
+                                } else {
+                                    echo '<td>' . htmlspecialchars($value) . '</td>';
+                                }
+                
+                                echo '</tr>';
+                            }
                         }
+                        echo '</tbody>';
+                        echo '</table>';
+                        echo '</div>';
+
+                        echo '<div class="exif-data">';
+                        echo '<center><h4>Image Settings</h4></center>';
+                        echo '<table class="table table-bordered">';
+                        echo '<thead><tr><th>Property</th><th>Value</th></tr></thead>';
+                        echo '<tbody>';
+                        foreach ($ImageToDisplay as $key) {
+                            if (array_key_exists($key, $exifData)) {
+                                echo '<tr>';
+                                echo '<td>' . htmlspecialchars($key) . '</td>';
+                                // Check if the value is an array before using htmlspecialchars
+                                $value = $exifData[$key];
+                                if (is_array($value)) {
+                                    echo '<td><pre>' . htmlspecialchars(print_r($value, true)) . '</pre></td>';
+                                    }
+                                    else {
+                                        echo '<td>' . htmlspecialchars($value) . '</td>';
+                                } 
+                                echo '</tr>';
+                            }
+                    }
+                        echo '</tbody>';
+                        echo '</table>';
+                        echo '</div>';
+
+                        echo '<div class="exif-data">';
+                        echo '<center><h4>Other Metadata</h4></center>';
+                        echo '<table class="table table-bordered">';
+                        echo '<thead><tr><th>Property</th><th>Value</th></tr></thead>';
+                        echo '<tbody>';
+                        foreach ($OtherToDisplay as $key) {
+                            if (array_key_exists($key, $exifData)) {
+                                echo '<tr>';
+                                echo '<td>' . htmlspecialchars($key) . '</td>';
+                                // Check if the value is an array before using htmlspecialchars
+                                $value = $exifData[$key];
+                                if (is_array($value)) {
+                                    echo '<td><pre>' . htmlspecialchars(print_r($value, true)) . '</pre></td>';
+                                } else {
+                                    echo '<td>' . htmlspecialchars($value) . '</td>';
+                                }
+                
+                                echo '</tr>';
+                            }
+                        }
+                        echo '</tbody>';
+                        echo '</table>';
                         echo '</div>';
                     } else {
                         echo '<p class="text-danger">Error reading Exif data.</p>';
@@ -122,6 +221,7 @@
                     echo '<p class="text-danger">Provided input does not contain a valid image.</p>';
                 }
             }
+                
             ?>
 
             <form action="" method="post" enctype="multipart/form-data">
@@ -143,6 +243,5 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 </body>
 </html>
