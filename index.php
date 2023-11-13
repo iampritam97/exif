@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Exif Data Viewer</title>
+    <meta name="description" content="View and analyze Exif data of images. Upload an image or provide an image URL to explore image metadata.">
+    <title>Exif Data Viewer - View and Analyze Image Metadata</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
         body {
@@ -64,7 +65,8 @@
 <body>
 
 <div class="jumbotron">
-    <h1>Exif Data Viewer</h1>
+<h1>Exif Data Viewer</h1>
+<h2>Explore and Analyze Image Metadata</h2>
 </div>
 
 <div class="container">
