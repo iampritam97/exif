@@ -8,10 +8,8 @@
     <style>
         body {
             background-color: #f8f8f8;
-        }
-
-        .container {
-            margin-top: 50px;
+            margin: 0;
+            padding: 0;
         }
 
         .jumbotron {
@@ -19,6 +17,7 @@
             color: #000;
             text-align: center;
             padding: 20px;
+            margin: 0;
         }
 
         .form-container {
@@ -48,7 +47,6 @@
             background-color: #000;
             color: #fff;
             border-color: #000;
-
             padding: 10px 20px;
             font-size: 12px;
             border-radius: 5px;
@@ -65,11 +63,11 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="jumbotron">
-        <h1>Exif Data Viewer</h1>
-    </div>
+<div class="jumbotron">
+    <h1>Exif Data Viewer</h1>
+</div>
 
+<div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3 form-container">
             <?php
@@ -125,9 +123,11 @@
             ?>
 
             <form action="" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="MAX_FILE_SIZE" value="10000000">
                 <div class="form-group">
                     <label for="image">Upload an image:</label>
                     <input type="file" name="image" id="image" class="form-control">
+                    <p>Upload an image (max size: 10 MB)</p>
                 </div>
                 <div class="form-group">
                     <label for="image_url">OR Enter URL of the image:</label>
